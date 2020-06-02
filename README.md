@@ -1,5 +1,7 @@
 # Random Sequence Stream
 
+![https://github.com/molecular-biology-lab/random-sequence-stream/actions](https://github.com/molecular-biology-lab/random-sequence-stream/workflows/publish/badge.svg)
+
 Randomized DNA/RNA sequence generator.
 
 ## Usage
