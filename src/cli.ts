@@ -19,6 +19,16 @@ const cli = meow(
 `,
   {
     flags: {
+      help: {
+        type: "boolean",
+        alias: "h",
+        default: false,
+      },
+      version: {
+        type: "boolean",
+        alias: "v",
+        default: false,
+      },
       size: {
         type: "number",
         alias: "s",
@@ -42,17 +52,23 @@ const cli = meow(
   }
 );
 
-let nucleotide: "DNA" | "RNA" | undefined;
-if (cli.flags.DNA || cli.flags.dna) {
-  nucleotide = "DNA";
-} else if (cli.flags.RNA || cli.flags.rna) {
-  nucleotide = "RNA";
+if (cli.flags.help) {
+  cli.showHelp();
+} else if (cli.flags.version) {
+  cli.showVersion();
+} else {
+  let nucleotide: "DNA" | "RNA" | undefined;
+  if (cli.flags.DNA || cli.flags.dna) {
+    nucleotide = "DNA";
+  } else if (cli.flags.RNA || cli.flags.rna) {
+    nucleotide = "RNA";
+  }
+
+  const size = cli.flags.size;
+
+  const randomSequenceStream = new RandomSequenceStream({
+    nucleotide,
+    size,
+  });
+  randomSequenceStream.pipe(process.stdout);
 }
-
-const size = cli.flags.size;
-
-const randomSequenceStream = new RandomSequenceStream({
-  nucleotide,
-  size,
-});
-randomSequenceStream.pipe(process.stdout);
